@@ -15,13 +15,20 @@ g = Github(os.getenv("GITHUB_ACCESS_TOKEN"))
 #     print(repo.name)
 
 def get_users(num_users=50):
-  idx, users = 0, []
+    idx, users = 0, []
 
-  for user in g.search_users("location:Texas language:javascript followers:20..500"):
-    users.append((user.name, user.email, user.followers, user.blog, user.hireable))
-    idx += 1
+    for user in g.search_users("location:Texas language:javascript followers:20..500"):
+        users.append({
+            "name": user.name,
+            "email": user.email, 
+            "followers": user.followers, 
+            "blog": user.blog, 
+            "hireable": user.hireable, 
+            "username": user.login,
+        })
+        idx += 1
 
-    if idx == num_users:
-      break
-  
-  return users
+        if idx == num_users:
+            break
+
+    return users
